@@ -1,0 +1,51 @@
+/* Navbar brand styling */
+.navbar-brand {
+  margin-left: 20px; /* Space from the left edge */
+  font-weight: bold; /* Make the brand name bold */
+}
+
+/* Align elements to the right and add spacing */
+.ml-auto {
+  margin-left: auto; /* Push elements to the right */
+  margin-right: 10px; /* Space from the right edge */
+}
+
+/* Flex styling for inline forms */
+.form-inline {
+  display: flex; /* Use flexbox layout */
+  align-items: center; /* Center align items vertically */
+}
+
+/* Margin adjustments for form controls */
+.form-control {
+  margin-right: 5px; /* Space between form controls */
+}
+
+/* Space between icon and text in nav links */
+.navbar .nav-link i {
+  margin-right: 5px; /* Space between icon and text */
+}
+
+/* Ensure dropdown menu appears correctly */
+.navbar-nav .dropdown-menu {
+  right: 0; /* Align dropdown to the right */
+  left: auto; /* Override left alignment */
+}
+
+/* Remove default dropdown indicator */
+.navbar-nav .dropdown-toggle::after {
+  display: none; /* Hide the default dropdown arrow */
+}
+
+/* app.component.css or your header component CSS */
+.navbar-icon {
+  width: 40px; /* Adjust the size as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 10px;
+}
+
+/* Optional: Add additional styling */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}

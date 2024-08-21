@@ -1,0 +1,50 @@
+/* Custom styles for the carousel */
+.carousel-item img {
+  object-fit: cover;
+  height: 500px; /* Adjust height as needed */
+}
+
+.carousel-caption h1,
+.carousel-caption p {
+  color: black; /* Set text color to black */
+  font-weight: bold; /* Make text bold */
+}
+
+.carousel-caption h1 {
+  font-size: 2rem; /* Adjust the font size as needed */
+}
+
+.carousel-caption p {
+  font-size: 1.25rem; /* Adjust the font size as needed */
+}
+
+/* Style for carousel control arrows */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+ /* Optional: Makes the arrow background circular */
+  font-size: 4.5rem; /* Increase the font size to make arrows bold */
+}
+
+/* Add custom styles to make arrows bold */
+.carousel-control-prev,
+.carousel-control-next {
+  font-weight: bold; /* Make arrows bold */
+}
+
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+  font-family: "Font Awesome 5 Free"; /* Use Font Awesome for solid icons */
+  content: "\f053"; /* Font Awesome chevron-left icon */
+  font-weight: 900; /* Make icon bold */
+}
+
+/* For the next button */
+.carousel-control-next-icon::before {
+  content: "\f054"; /* Font Awesome chevron-right icon */
+}
+
+/* Ensure text color is black */
+.carousel-control-prev,
+.carousel-control-next {
+  color: black;
+}

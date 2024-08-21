@@ -1,0 +1,33 @@
+.footer {
+  background-color: #1c2331;
+  color: white;
+  width: 100%;
+
+  left: 0;
+  bottom: 0;
+
+}
+
+
+.social-media-section {
+  background-color: #07a142;
+}
+
+.social-media-section .text-white {
+  margin-right: 1rem;
+}
+
+.links-section .text-uppercase {
+  font-weight: bold;
+}
+
+.links-section hr {
+  width: 60px;
+  background-color: rgb(140, 206, 41);
+  height: 2px;
+}
+
+.copyright-section {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
