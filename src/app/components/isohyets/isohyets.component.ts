@@ -1,138 +1,231 @@
-import { Component, OnInit } from '@angular/core';
-import * as L from 'leaflet';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'app-isohyets',
   templateUrl: './isohyets.component.html',
   styleUrls: ['./isohyets.component.css']
 })
-export class IsohyetsComponent {
-  private map: L.Map | undefined;
-  private isohyetLayer: L.GeoJSON | undefined;
+export class IsohyetsComponent implements OnInit, OnDestroy {
+  private map: mapboxgl.Map | undefined;
+  private isohyetDataUrl: string = 'assets/isobars.geojson'; // Ensure correct path
+  style = 'mapbox://styles/mapbox/light-v10';
+  lat: number = 30.3753; // Latitude for Pakistan
+  lng: number = 69.3451; // Longitude for Pakistan
+
+  ngOnInit() {
+    mapboxgl.accessToken = environment.mapboxAccessToken;
+    this.initializeMap();
+  }
+
+  ngOnDestroy() {
+    if (this.map) {
+      this.map.remove();
+    }
+  }
+
+  private initializeMap() {
+    this.map = new mapboxgl.Map({
+      container: 'map4', // The ID of the HTML element that will contain the map
+      style: this.style,
+      center: [this.lng, this.lat],
+      zoom: 5, // Adjust zoom level to show more of Pakistan
+    });
+
+    this.map.on('load', () => {
+      if (this.map) {
+        this.addIsohyetsLayer();
+      }
+    });
+
+    this.map.on('click', this.onMapClick.bind(this));
+
+    // Optional: Handle any loading errors
+    this.map.on('error', (error) => {
+      console.error('Map loading error:', error);
+    });
+  }
+
+  private addIsohyetsLayer() {
+    if (this.map) {
+      // Add the GeoJSON data as a source
+      this.map.addSource('isohyets', {
+        type: 'geojson',
+        data: this.isohyetDataUrl
+      });
+
+      // Add a fill layer to visualize the isohyets
+      this.map.addLayer({
+        id: 'isohyets-layer',
+        type: 'fill',
+        source: 'isohyets',
+        layout: {},
+        paint: {
+          'fill-color': [
+            'interpolate',
+            ['linear'],
+            ['get', 'precipitation'],
+            0, '#0000ff', // Blue for low precipitation
+            200, '#ff0000' // Red for high precipitation
+          ],
+          'fill-opacity': 0.5
+        }
+      });
+
+      // Optionally add a line layer to outline the isohyets
+      this.map.addLayer({
+        id: 'isohyets-outline',
+        type: 'line',
+        source: 'isohyets',
+        layout: {},
+        paint: {
+          'line-color': '#000',
+          'line-width': 2
+        }
+      });
+    }
+  }
+
+  onMapClick(event: mapboxgl.MapMouseEvent) {
+    console.log('Map clicked at', event.lngLat);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import mapboxgl, { MapMouseEvent } from 'mapbox-gl'; // Importing MapMouseEvent directly
+
+@Component({
+  selector: 'app-isohyets',
+  templateUrl: './isohyets.component.html',
+  styleUrls: ['./isohyets.component.css']
+})
+export class IsohyetsComponent implements OnInit, OnDestroy {
+  map: mapboxgl.Map | undefined; // Use mapboxgl.Map type
+  style = 'mapbox://styles/mapbox/streets-v11';
+  lat: number = 30.2672;
+  lng: number = -97.7431;
+
+  ngOnInit() {
+    mapboxgl.accessToken = environment.mapboxAccessToken; // Use environment variable
+
+    this.map = new mapboxgl.Map({
+      container: 'map4', // Ensure this matches your HTML
+      style: this.style,
+      zoom: 13,
+      center: [this.lng, this.lat]
+    });
+
+    this.map.on('click', this.onMapClick.bind(this)); // Bind this context for event handling
+  }
+
+  onMapClick(event: MapMouseEvent) { // Use the imported MapMouseEvent type
+    console.log('Map clicked at', event.lngLat);
+  }
+
+  ngOnDestroy() {
+    if (this.map) {
+      this.map.remove();
+    }
+  }
+}
+
+
+
+  /*
+  private map!: Map; // Define the map variable using the correct type
+  private deckOverlay!: MapboxOverlay; // Declare deckOverlay with the correct type
   private isohyetDataUrl: string = '../../../assets/isohyets.geojson';
-  private shapefileUrl: string = '../../../assets/world-administrative-boundaries.zip';
-  private updateIntervalId: any;
+
   ngOnInit() {
     this.initializeMap();
   }
 
   ngOnDestroy() {
-    // Clear the interval when the component is destroyed
-    if (this.updateIntervalId) {
-      clearInterval(this.updateIntervalId);
+    if (this.map) {
+      this.map.remove(); // Cleanup on component destroy
     }
   }
+
   private initializeMap() {
-    this.map = L.map('map4').setView([30.3753, 69.3451], 4); // Centered on Pakistan, zoom level 4
+    mapboxgl.accessToken = 'YOUR_ACTUAL_MAPBOX_ACCESS_TOKEN'; // Set your Mapbox access token
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 18,
-      minZoom: 1,
-      tileSize: 256,
-      zoomOffset: 0,
-      opacity: 0.5,
-      noWrap: true
-    }).addTo(this.map);
+    const options: MapboxOptions = {
+      container: 'map4', // Ensure your HTML contains a div with this ID
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [69.3451, 30.3753],
+      zoom: 4,
+      pitch: 45,
+      bearing: 0,
+      antialias: true
+    };
 
-    this.addShapefileLayer();
-    this.addIsohyetLayer();
-  }
+    this.map = new mapboxgl.Map(options); // Create the map instance
 
-  private addShapefileLayer() {
-    this.updateShapefileLayer();
-  }
+    this.map.on('load', () => {
+      this.map.addSource('terrain-data', {
+        type: 'raster-dem',
+        url: 'mapbox://mapbox.terrain-rgb',
+        tileSize: 512,
+        maxzoom: 14
+      });
 
-  private async updateShapefileLayer() {
-    if (!this.map) return;
+      this.map.setTerrain({ source: 'terrain-data', exaggeration: 1.5 });
 
-    const geoLayer = L.geoJSON(null, {
-      onEachFeature: (feature, layer) => {
-        if (feature.properties) {
-          const properties = Object.keys(feature.properties)
-            .map(key => `${key}: ${feature.properties[key]}`)
-            .join("<br />");
-          layer.bindPopup(properties);
-        }
-      }
-    }).addTo(this.map);
+      // Create Deck.gl overlay
+      this.deckOverlay = new MapboxOverlay({
+        layers: [this.createGeoJsonLayer()]
+      });
 
-    const shp = (await import('shpjs')).default;
-    shp(this.shapefileUrl).then((data: any) => {
-      geoLayer.addData(data);
-    }).catch((error: any) => {
-      console.error('Error loading shapefile:', error);
+      // Set the deck overlay to the map
+      this.deckOverlay.setMap(this.map);
     });
   }
 
-  private addIsohyetLayer() {
-    this.updateIsohyetLayer();
-    this.startIsohyetAnimation();
+  private createGeoJsonLayer() {
+    return new GeoJsonLayer({
+      id: 'isohyets-layer',
+      data: this.isohyetDataUrl,
+      filled: true,
+      extruded: true,
+      getElevation: (d) => d.properties.precipitation || 0,
+      getFillColor: (d) => this.getIsohyetColor(d.properties.precipitation),
+      pickable: true,
+      autoHighlight: true,
+      onClick: (info) => console.log(info),
+      opacity: 0.8
+    });
   }
 
-  private updateIsohyetLayer() {
-    if (!this.map) return;
-
-    if (this.isohyetLayer) {
-      this.map.removeLayer(this.isohyetLayer);
-    }
-
-    fetch(this.isohyetDataUrl)
-      .then(response => response.json())
-      .then((data: any) => {
-        if (this.validateGeoJson(data)) {
-          console.log('Fetched isohyet data:', data);
-          this.isohyetLayer = L.geoJSON(data, {
-            style: (feature) => this.getIsohyetStyle(feature),
-            onEachFeature: (feature, layer) => {
-              if (feature.properties) {
-                layer.bindPopup(`Precipitation: ${feature.properties.precipitation} mm`);
-              }
-            }
-          }).addTo(this.map!);
-        } else {
-          console.error('Invalid isohyet GeoJSON data:', data);
-        }
-      })
-      .catch((error: any) => {
-        console.error('Error fetching isohyet data:', error);
-      });
+  private getIsohyetColor(precipitation: number): [number, number, number, number] {
+    if (precipitation > 200) return [255, 0, 0, 255]; // Example color for high precipitation
+    return [0, 0, 255, 255]; // Example color for low precipitation
   }
-
-  private getIsohyetStyle(feature: any): L.PathOptions {
-    const precipitation = feature.properties.precipitation || 0;
-    let fillColor = 'rgba(255, 255, 255, 0.5)'; // Default color
-
-    if (precipitation > 200) {
-      fillColor = 'rgba(0, 0, 255, 0.5)'; // Blue for very high precipitation
-    } else if (precipitation > 150) {
-      fillColor = 'rgba(70, 130, 180, 0.5)'; // Steel blue for high precipitation
-    } else if (precipitation > 100) {
-      fillColor = 'rgba(100, 149, 237, 0.5)'; // Cornflower blue for moderate precipitation
-    } else if (precipitation > 50) {
-      fillColor = 'rgba(135, 206, 250, 0.5)'; // Light sky blue for low precipitation
-    } else {
-      fillColor = 'rgba(173, 216, 230, 0.5)'; // Light blue for very low precipitation
-    }
-
-    return {
-      fillColor: fillColor,
-      weight: 5, // Increased weight for bolder lines
-      opacity: 0.9, // Full opacity for lines
-      color: 'blue', // Line color
-      dashArray: '2, 6', // Dashed lines for distinctiveness
-      fillOpacity: 0.6
-    };
-  }
-
-
-  private startIsohyetAnimation() {
-    // Store the interval ID so it can be cleared later
-    this.updateIntervalId = setInterval(() => this.updateIsohyetLayer(), 5000);
-  }
-
-  private validateGeoJson(data: any): boolean {
-    return data && data.type === 'FeatureCollection' && Array.isArray(data.features);
-  }
-}
+  */

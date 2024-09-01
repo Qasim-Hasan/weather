@@ -18,16 +18,21 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
+    "skipLibCheck": true,
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",
       "dom"
+    ],
+    "types": [
+      "mapbox-gl"
     ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
+    "allowSyntheticDefaultImports": true,
     "strictTemplates": true
   }
 }

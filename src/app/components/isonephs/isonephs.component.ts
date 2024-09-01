@@ -97,35 +97,34 @@ export class IsonephsComponent implements OnInit, OnDestroy {
     console.log('Adding station layer with stations:', stations);
 
     stations.forEach(station => {
-      const marker = L.marker([station.Latitude, station.Longitude], {
-        zIndexOffset: 1000 // Set a higher z-index for markers
-      });
+        // Create a custom icon for the station
+        const customIcon = L.divIcon({
+            className: 'custom-station-icon',
+            html: `
+                <div style="text-align: center;">
+                    <img src="../../../assets/pin.png" style="width: 50px; height: 50px;" alt="Station Icon"><br>
+                    <strong>${station.Title}</strong><br>
+                    Temp: ${station.Temperature} °C<br>
+                    Humidity: ${station.Humidity} %
+                </div>
+            `,
+            iconSize: [120, 120],
+            iconAnchor: [50, 50] // Center the icon on the point
+        });
 
-      // Create a divIcon for the station info
-      const labelIcon = L.divIcon({
-        className: 'station-label',
-        html: `
-          <div style="font-weight: bold; font-size: 12px;">
-            ${station.Title}<br>
-            Temp: ${station.Temperature} °C<br>
-            Humidity: ${station.Humidity} %
-          </div>
-        `,
-        iconSize: [100, 50],
-        iconAnchor: [50, 25] // Center the label over the marker
-      });
+        // Add the custom icon as a marker on the map
+        const marker = L.marker([station.Latitude, station.Longitude], {
+            icon: customIcon
+        }).addTo(this.map!);
 
-      // Add the label to the map
-      L.marker([station.Latitude, station.Longitude], { icon: labelIcon }).addTo(this.map!);
-
-      // Add the marker to the station layer
-      this.stationLayer.addLayer(marker);
+        // Add the marker to the station layer
+        this.stationLayer.addLayer(marker);
     });
 
     // Add the marker layer to the map
     this.stationLayer.addTo(this.map!);
-    console.log('Station markers added to the map.'); // Debug log
-  }
+    console.log('Custom station markers added to the map.');
+}
 
 
   private addShapefileLayer() {

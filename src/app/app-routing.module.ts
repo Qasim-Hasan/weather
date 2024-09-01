@@ -10,15 +10,15 @@ import { IsohyetsComponent } from './components/isohyets/isohyets.component';
 import { IsonephsComponent } from './components/isonephs/isonephs.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/homepage', pathMatch: 'full' },
+  { path: '', redirectTo: '/visualization', pathMatch: 'full' },
   { path: 'homepage', component: HomepageComponent },
   { path: 'visualization', component: VisualizationComponent },
   { path: 'isotherms', component: IsothermComponent },
   { path: 'gis', component: GisComponent },
-  {path: 'isobars',component: IsobarsComponent},
-  {path: 'isohumes',component: IsohumesComponent},
-  {path: 'isohyets',component: IsohyetsComponent},
-  {path: 'isonephs',component: IsonephsComponent}
+  { path: 'isobars', component: IsobarsComponent },
+  { path: 'isohumes', component: IsohumesComponent },
+  { path: 'isohyets', component: IsohyetsComponent },
+  { path: 'isonephs', component: IsonephsComponent },
 ];
 
 @NgModule({
