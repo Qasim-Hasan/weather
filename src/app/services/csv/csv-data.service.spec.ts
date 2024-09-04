@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IsobarDataService } from './isobar-data.service';
+import { CsvDataService } from './csv-data.service';
 
-describe('IsobarDataService', () => {
-  let service: IsobarDataService;
+describe('CsvDataService', () => {
+  let service: CsvDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(IsobarDataService);
+    service = TestBed.inject(CsvDataService);
   });
 
   it('should be created', () => {

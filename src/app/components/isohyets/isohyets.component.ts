@@ -9,7 +9,7 @@ import mapboxgl from 'mapbox-gl';
 })
 export class IsohyetsComponent implements OnInit, OnDestroy {
   private map: mapboxgl.Map | undefined;
-  private isohyetDataUrl: string = 'assets/isobars.geojson'; // Ensure correct path
+  private isohyetDataUrl: string = 'assets/isonephs.geojson'; // Ensure correct path
   style = 'mapbox://styles/mapbox/light-v10';
   lat: number = 30.3753; // Latitude for Pakistan
   lng: number = 69.3451; // Longitude for Pakistan

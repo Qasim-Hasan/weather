@@ -19,6 +19,11 @@ import { IsonephsComponent } from './components/isonephs/isonephs.component';
 
 // Import HttpClientModule
 import { HttpClientModule } from '@angular/common/http';
+import { CsvDataService } from './services/csv/csv-data.service';
+import { IsobarImageDataService } from './services/image/isobar-image-data.service';
+import { IsobarService } from './services/geojson/isobar.service';
+
+
 
 @NgModule({
   declarations: [
@@ -35,15 +40,15 @@ import { HttpClientModule } from '@angular/common/http';
     IsobarsComponent,
     IsohumesComponent,
     IsohyetsComponent,
-    IsonephsComponent
+    IsonephsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule // Add this line
+    HttpClientModule, // Add this line
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CsvDataService, IsobarImageDataService ,IsobarService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
