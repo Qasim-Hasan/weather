@@ -17,6 +17,9 @@ import { IsohumesComponent } from './components/isohumes/isohumes.component';
 import { IsohyetsComponent } from './components/isohyets/isohyets.component';
 import { IsonephsComponent } from './components/isonephs/isonephs.component';
 
+// Import HttpClientModule
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,10 +40,10 @@ import { IsonephsComponent } from './components/isonephs/isonephs.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule // Add this line
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
- }
+export class AppModule { }

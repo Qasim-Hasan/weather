@@ -1,22 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
+import { IsobarDataService } from '../../services/isobar-data.service';
+
 @Component({
   selector: 'app-isobars',
   templateUrl: './isobars.component.html',
   styleUrls: ['./isobars.component.css']
 })
-export class IsobarsComponent implements OnInit{
+export class IsobarsComponent implements OnInit, OnDestroy {
   private map: L.Map | undefined;
   private isobarLayer: L.GeoJSON | undefined;
-  private isobarDataUrl: string = '../../../assets/isobars.geojson';
   private shapefileUrl: string = '../../../assets/world-administrative-boundaries.zip';
+  private overlayImageUrl: string = '../../../assets/kriging_isobars.png';
+  private intervalId: any;
+  private pngUrl: string | undefined; // Variable to store the PNG URL
+
+  constructor(private isobarDataService: IsobarDataService) { }
 
   ngOnInit() {
     this.initializeMap();
+    this.loadIsobarData(); // Call to load isobar data
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   private initializeMap() {
-    this.map = L.map('map2').setView([30.3753, 69.3451], 4); // Centered on Pakistan, zoom level 6
+    this.map = L.map('map2').setView([30.3753, 69.3451], 4);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -31,6 +44,41 @@ export class IsobarsComponent implements OnInit{
     this.addShapefileLayer();
     this.addIsobarLayer();
   }
+
+  private loadIsobarData() {
+    this.isobarDataService.getIsobarData().subscribe(
+      data => {
+        console.log('Fetched isobar data:', data);
+        this.pngUrl = data.png_url; // Store the PNG URL
+
+        // Check if bounds exist and is properly structured
+        if (data.coordinates && data.coordinates.bounds && Array.isArray(data.coordinates.bounds)) {
+          // Create bounds from coordinates
+          const bounds = L.latLngBounds(data.coordinates.bounds.map((coord: [number, number]) => L.latLng(coord[1], coord[0])));
+          this.addOverlayImage(bounds); // Pass the bounds for the overlay image
+          // Inside loadIsobarData, after creating bounds
+
+        } else {
+          console.error('Invalid bounds structure:', data.coordinates);
+        }
+      },
+      error => {
+        console.error('Error fetching isobar data:', error);
+      }
+    );
+  }
+
+
+  private addOverlayImage(bounds: L.LatLngBoundsExpression) {
+    if (!this.map) return;
+
+    console.log('Adding image overlay with bounds:', bounds);
+    L.imageOverlay(this.pngUrl || this.overlayImageUrl, bounds, {
+      opacity: 0.6,
+      interactive: true
+    }).addTo(this.map);
+  }
+
 
   private addShapefileLayer() {
     this.updateShapefileLayer();
@@ -50,12 +98,13 @@ export class IsobarsComponent implements OnInit{
       }
     }).addTo(this.map);
 
-    const shp = (await import('shpjs')).default;
-    shp(this.shapefileUrl).then((data: any) => {
+    try {
+      const shp = (await import('shpjs')).default;
+      const data = await shp(this.shapefileUrl);
       geoLayer.addData(data);
-    }).catch((error: any) => {
+    } catch (error) {
       console.error('Error loading shapefile:', error);
-    });
+    }
   }
 
   private addIsobarLayer() {
@@ -70,55 +119,39 @@ export class IsobarsComponent implements OnInit{
       this.map.removeLayer(this.isobarLayer);
     }
 
-    fetch(this.isobarDataUrl)
-      .then(response => response.json())
-      .then((data: any) => {
+    this.isobarDataService.getIsobarGeojson().subscribe(
+      data => {
         if (this.validateGeoJson(data)) {
-          console.log('Fetched isobar data:', data);
+          console.log('Fetched isobar data from API:', data);
+
           this.isobarLayer = L.geoJSON(data, {
-            style: (feature) => this.getIsobarStyle(feature),
+            style: {
+              color: 'black', // Set a fixed color for all lines
+              weight: 2, // Set the weight to make the line bolder
+              opacity: 30.0 // Set opacity to fully opaque
+            },
             onEachFeature: (feature, layer) => {
-              if (feature.properties) {
-                layer.bindPopup(`Pressure: ${feature.properties.pressure} hPa`);
-              }
+              // Since there are no properties, you can skip binding popup or display a default message
+              layer.bindPopup('Isobar Line'); // Display a default message in the popup
             }
           }).addTo(this.map!);
         } else {
           console.error('Invalid isobar GeoJSON data:', data);
         }
-      })
-      .catch((error: any) => {
+      },
+      error => {
         console.error('Error fetching isobar data:', error);
-      });
+      }
+    );
   }
 
-  private getIsobarStyle(feature: any): L.PathOptions {
-    const pressure = feature.properties.pressure || 0;
-    let fillColor = 'rgba(0, 0, 255, 0.5)'; // Default color
-
-    if (pressure > 1020) {
-      fillColor = 'rgba(0, 0, 255, 0.5)'; // Blue for high pressure
-    } else if (pressure > 1010) {
-      fillColor = 'rgba(173, 216, 230, 0.5)'; // Light blue for moderate pressure
-    } else {
-      fillColor = 'rgba(135, 206, 235, 0.5)'; // Sky blue for low pressure
-    }
-
-    return {
-      fillColor: fillColor,
-      weight: 3, // Increased weight for bold lines
-      opacity: 1, // Full opacity for lines
-      color: 'blue', // Line color
-      dashArray: '', // Solid lines
-      fillOpacity: 0.7
-    };
-  }
 
   private startIsobarAnimation() {
-    setInterval(() => this.updateIsobarLayer(), 5000);
+    this.intervalId = setInterval(() => this.updateIsobarLayer(), 60000);
   }
 
   private validateGeoJson(data: any): boolean {
     return data && data.type === 'FeatureCollection' && Array.isArray(data.features);
   }
 }
+
