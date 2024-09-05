@@ -16,12 +16,16 @@ import { IsobarsComponent } from './components/isobars/isobars.component';
 import { IsohumesComponent } from './components/isohumes/isohumes.component';
 import { IsohyetsComponent } from './components/isohyets/isohyets.component';
 import { IsonephsComponent } from './components/isonephs/isonephs.component';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 // Import HttpClientModule
 import { HttpClientModule } from '@angular/common/http';
+// Services
 import { CsvDataService } from './services/csv/csv-data.service';
 import { IsobarImageDataService } from './services/image/isobar-image-data.service';
 import { IsobarService } from './services/geojson/isobar.service';
+import { IsothermService } from './services/geojson/isotherm.service';
+import { MapComponent } from './components/map/map.component';
 
 
 
@@ -41,14 +45,18 @@ import { IsobarService } from './services/geojson/isobar.service';
     IsohumesComponent,
     IsohyetsComponent,
     IsonephsComponent,
+    MapComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule, // Add this line
+    MatSelectModule,
+    MatButtonModule,
   ],
-  providers: [CsvDataService, IsobarImageDataService ,IsobarService],
+  providers: [CsvDataService, IsobarImageDataService ,IsobarService,IsothermService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -14,6 +14,9 @@ export class IsobarImageDataService {
 
   // Method to fetch specific isobar data
   getIsobarData(): Observable<any> {
+    // Log a message to the console when the method is called
+    console.log('Fetching isobar image data from:', this.apiUrlImage);
+
     return this.http.get<any>(this.apiUrlImage).pipe(catchError(this.handleError));
   }
 

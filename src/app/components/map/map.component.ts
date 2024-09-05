@@ -6,11 +6,11 @@ import { IsobarImageDataService } from '../../services/image/isobar-image-data.s
 import 'leaflet.markercluster';
 
 @Component({
-  selector: 'app-isobars',
-  templateUrl: './isobars.component.html',
-  styleUrls: ['./isobars.component.css']
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
 })
-export class IsobarsComponent implements OnInit {
+export class MapComponent {
   private map: L.Map | undefined;
   private shapefileUrl: string = '../../../assets/world-administrative-boundaries.zip';
   private pngUrl: string | undefined;

@@ -22,6 +22,9 @@ export class CsvDataService {
 
   // Method to fetch CSV data from the FastAPI backend
   fetchCsvData(): Observable<IsobarData[]> {
+    // Log a message to the console when the method is called
+    console.log('Fetching CSV data from:', this.csvUrl);
+
     return new Observable<IsobarData[]>(observer => {
       this.http.get(this.csvUrl, { responseType: 'text' }).subscribe({
         next: (data: string) => this.parseCsvData(data, observer),

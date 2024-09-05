@@ -1,23 +1,24 @@
-<!-- Container for heading and text-->
+<!-- Container for heading and text -->
 <div class="container my-4">
   <h1>PDM VISUALIZATION TOOLS</h1>
 </div>
-<div class="button-row">
-  <button (click)="toggleIsobarLayer()">
-    {{ isobarLayerVisible ? 'Hide Isobars' : 'Show Isobars' }}
-  </button>
 
-  <button (click)="toggleStationMarkers()">
+<!-- Button row with equal-sized buttons -->
+<div class="button-row d-flex flex-wrap justify-content-between">
+  <button class="btn btn-primary m-1" (click)="toggleStationMarkers()">
     {{ stationMarkersVisible ? 'Hide Stations' : 'Show Stations' }}
   </button>
 
-  <button (click)="togglePngOverlay()">
+  <button class="btn btn-primary m-1" (click)="togglePngOverlay()">
     {{ pngOverlayVisible ? 'Hide Image Overlay' : 'Show Image Overlay' }}
   </button>
 </div>
+
 <div class="container-isotherm">
   <div id="map2"></div>
 </div>
+
+
 
 
 

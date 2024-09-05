@@ -33,11 +33,7 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Shadow for depth */
 }
 
-.button-row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px; /* Add some space below the button row */
-}
+
 
 button {
   margin: 0 5px; /* Add some margin between buttons */
@@ -47,8 +43,37 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  height: 50px; /* Set a uniform height */
 }
 
 button:hover {
   background-color: #0056b3;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+  justify-content: space-between; /* Distributes space between buttons */
+}
+
+button,
+.mat-form-field {
+  flex: 1; /* Allow buttons and the dropdown to grow equally */
+  margin: 5px; /* Add margin for spacing */
+  min-width: 150px; /* Minimum width for uniformity */
+}
+
+/* Custom marker styles to prevent scaling with zoom */
+.station-marker-content {
+  font-size: 1px;  /* Set a fixed font size */
+  width: 9px;      /* Fixed width for the marker */
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8); /* Optional background for better readability */
+  border-radius: 5px;
+  padding: 3px;
+  border: 1px solid #333;
+}
+
+.custom-station-icon {
+  transform: translate(-50%, -50%); /* Center the marker */
 }
