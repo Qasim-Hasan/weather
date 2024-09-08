@@ -26,7 +26,7 @@ import { IsobarImageDataService } from './services/image/isobar-image-data.servi
 import { IsobarService } from './services/geojson/isobar.service';
 import { IsothermService } from './services/geojson/isotherm.service';
 import { MapComponent } from './components/map/map.component';
-
+import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 
 @NgModule({
@@ -55,6 +55,7 @@ import { MapComponent } from './components/map/map.component';
     HttpClientModule, // Add this line
     MatSelectModule,
     MatButtonModule,
+    FormsModule
   ],
   providers: [CsvDataService, IsobarImageDataService ,IsobarService,IsothermService],
   bootstrap: [AppComponent],

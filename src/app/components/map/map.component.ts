@@ -11,6 +11,8 @@ import 'leaflet.markercluster';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent {
+
+ /*
   private map: L.Map | undefined;
   private shapefileUrl: string = '../../../assets/world-administrative-boundaries.zip';
   private pngUrl: string | undefined;
@@ -173,4 +175,6 @@ export class MapComponent {
     }
     this.pngOverlayVisible = !this.pngOverlayVisible;
   }
+}
+*/
 }

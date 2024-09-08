@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -8,21 +8,24 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class IsobarImageDataService {
-  private apiUrlImage = `${environment.apiUrl}isobar-data`;
+  private apiUrlImage = `${environment.apiUrl}image-data`;
 
   constructor(private http: HttpClient) {}
 
-  // Method to fetch specific isobar data
-  getIsobarData(): Observable<any> {
+  // Method to fetch specific isobar data with image type as parameter
+  getIsobarData(imageType: string): Observable<any> {
     // Log a message to the console when the method is called
-    console.log('Fetching isobar image data from:', this.apiUrlImage);
+    console.log('Fetching image data from:', this.apiUrlImage, 'with image type:', imageType);
 
-    return this.http.get<any>(this.apiUrlImage).pipe(catchError(this.handleError));
+    // Set query parameters
+    const params = new HttpParams().set('image_type', imageType);
+
+    return this.http.get<any>(this.apiUrlImage, { params }).pipe(catchError(this.handleError));
   }
 
   // Method to handle HTTP errors
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error);
-    return throwError(() => new Error('Failed to fetch isobar image data. Please try again later.'));
+    return throwError(() => new Error('Failed to fetch image data. Please try again later.'));
   }
 }

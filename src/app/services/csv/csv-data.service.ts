@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import * as Papa from 'papaparse';
 import { environment } from '../../../environments/environment';
 
@@ -16,17 +16,19 @@ interface IsobarData {
   providedIn: 'root'
 })
 export class CsvDataService {
-  private csvUrl = `${environment.apiUrl}isobar-csv`; // URL for CSV data
+  private csvUrl = `${environment.apiUrl}csv`; // URL for CSV data
 
   constructor(private http: HttpClient) {}
 
-  // Method to fetch CSV data from the FastAPI backend
+  // Method to fetch CSV data from the FastAPI backend without caching
   fetchCsvData(): Observable<IsobarData[]> {
-    // Log a message to the console when the method is called
-    console.log('Fetching CSV data from:', this.csvUrl);
+    // Append a timestamp query parameter to prevent caching
+    const urlWithNoCache = `${this.csvUrl}?_=${new Date().getTime()}`;
+
+    console.log('Fetching CSV data from:', urlWithNoCache);
 
     return new Observable<IsobarData[]>(observer => {
-      this.http.get(this.csvUrl, { responseType: 'text' }).subscribe({
+      this.http.get(urlWithNoCache, { responseType: 'text' }).subscribe({
         next: (data: string) => this.parseCsvData(data, observer),
         error: (error) => this.handleFetchError(error, observer)
       });
