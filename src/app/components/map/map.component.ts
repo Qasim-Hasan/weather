@@ -10,21 +10,26 @@ import 'leaflet.markercluster';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent {
 
- /*
+export class MapComponent implements OnInit {
   private map: L.Map | undefined;
-  private shapefileUrl: string = '../../../assets/world-administrative-boundaries.zip';
+  private geoJsonUrl: string = '../../../assets/world-administrative-boundaries.geojson'; // Updated to GeoJSON
   private pngUrl: string | undefined;
+  private heatmapUrl: string | undefined; // New property for heatmap URL
   private stationData: StationData[] = [];
   public stationMarkersVisible: boolean = true;
   public pngOverlayVisible: boolean = true;
   private imageOverlay: L.ImageOverlay | undefined;
+  private heatmapOverlay: L.ImageOverlay | undefined; // New property for heatmap overlay
   private stationMarkers: L.Marker[] = [];
   private overlayBounds: L.LatLngBounds | undefined;
 
-  // Initialize stationMarkersCluster to avoid undefined issues
-  private stationMarkersCluster: L.MarkerClusterGroup = L.markerClusterGroup();
+  // Initialize stationMarkersCluster with maxClusterRadius option
+private stationMarkersCluster: L.MarkerClusterGroup = L.markerClusterGroup({
+  maxClusterRadius: 160, // Adjust this value as needed
+});
+
+  public selectedImageType: string = 'isobar'; // Default value
 
   constructor(
     private csvDataService: CsvDataService,
@@ -33,7 +38,7 @@ export class MapComponent {
 
   ngOnInit() {
     this.initializeMap();
-    this.loadIsobarData();
+    this.loadIsobarData(); // You can specify the image type here
     this.fetchStationData();
   }
 
@@ -51,43 +56,74 @@ export class MapComponent {
       minZoom: 5,
       tileSize: 256,
       zoomOffset: 0,
-      opacity: 0.5,
+      opacity: 1,
       noWrap: true
     }).addTo(this.map);
 
-    this.addShapefileLayer();
+    this.addGeoJsonLayer(); // Change method call to load GeoJSON
   }
 
-  private loadIsobarData() {
-    this.isobarImageDataService.getIsobarData().subscribe((data) => {
-      this.pngUrl = data.png_url;
-      if (data.coordinates && data.coordinates.bounds && Array.isArray(data.coordinates.bounds)) {
-        this.overlayBounds = L.latLngBounds(
-          data.coordinates.bounds.map((coord: [number, number]) => L.latLng(coord[1], coord[0]))
-        );
-        this.addOverlayImage();
+
+
+
+
+
+  public loadIsobarData() {
+    const imageType = this.selectedImageType; // Use the selected image type
+    this.isobarImageDataService.getIsobarData(imageType).subscribe(
+      (data) => {
+        this.pngUrl = data.layer_image_url;
+        this.heatmapUrl = data.heatmap_image_url;
+
+        if (data.coordinates && data.coordinates.bounds && Array.isArray(data.coordinates.bounds)) {
+          this.overlayBounds = L.latLngBounds(
+            data.coordinates.bounds.map((coord: [number, number]) => L.latLng(coord[1], coord[0]))
+          );
+          this.addOverlayImage();
+          this.addHeatmapImage();
+        }
+      },
+      (error) => {
+        console.error(`Error loading isobar data for ${imageType}:`, error);
+        // Optionally notify user or take other actions
       }
-    });
+    );
   }
+
 
   private addOverlayImage() {
     if (!this.map || !this.pngUrl || !this.overlayBounds) return;
 
+    // Remove previous overlays
     if (this.imageOverlay) {
       this.imageOverlay.remove();
     }
 
     this.imageOverlay = L.imageOverlay(this.pngUrl, this.overlayBounds, {
-      opacity: 0.4,
+      opacity: 1,
       interactive: true
     }).addTo(this.map);
   }
 
-  private addShapefileLayer() {
-    this.updateShapefileLayer();
+  private addHeatmapImage() {
+    if (!this.map || !this.heatmapUrl || !this.overlayBounds) return;
+
+    // Remove previous heatmap overlay
+    if (this.heatmapOverlay) {
+      this.heatmapOverlay.remove();
+    }
+
+    this.heatmapOverlay = L.imageOverlay(this.heatmapUrl, this.overlayBounds, {
+      opacity: 0.9,
+      interactive: true
+    }).addTo(this.map);
   }
 
-  private async updateShapefileLayer() {
+  private addGeoJsonLayer() {
+    this.updateGeoJsonLayer(); // Call the updated method to load GeoJSON
+  }
+
+  private async updateGeoJsonLayer() {
     if (!this.map) return;
 
     const geoLayer = L.geoJSON(null, {
@@ -102,11 +138,11 @@ export class MapComponent {
     }).addTo(this.map);
 
     try {
-      const shp = (await import('shpjs')).default;
-      const data = await shp(this.shapefileUrl);
-      geoLayer.addData(data);
+      const response = await fetch(this.geoJsonUrl);
+      const data = await response.json();
+      geoLayer.addData(data); // Add GeoJSON data to the layer
     } catch (error) {
-      console.error('Error loading shapefile:', error);
+      console.error('Error loading GeoJSON:', error);
     }
   }
 
@@ -158,7 +194,7 @@ export class MapComponent {
     );
   }
 
-  toggleStationMarkers() {
+  public toggleStationMarkers() {
     if (this.stationMarkersVisible) {
       this.stationMarkersCluster.clearLayers();
     } else {
@@ -167,7 +203,7 @@ export class MapComponent {
     this.stationMarkersVisible = !this.stationMarkersVisible;
   }
 
-  togglePngOverlay() {
+  public togglePngOverlay() {
     if (this.pngOverlayVisible) {
       this.imageOverlay?.remove();
     } else {
@@ -175,6 +211,14 @@ export class MapComponent {
     }
     this.pngOverlayVisible = !this.pngOverlayVisible;
   }
-}
-*/
+
+  public toggleHeatmapOverlay() {
+    if (this.heatmapOverlay) {
+      if (this.map && this.map.hasLayer(this.heatmapOverlay)) {
+        this.heatmapOverlay.remove();
+      } else {
+        this.addHeatmapImage();
+      }
+    }
+  }
 }

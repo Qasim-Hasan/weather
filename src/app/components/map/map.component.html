@@ -1,1 +1,35 @@
-<p>map works!</p>
+<!-- Container for heading and text -->
+<div class="container my-4">
+  <h1>PDM VISUALIZATION TOOLS</h1>
+</div>
+
+<!-- Dropdown for selecting image type -->
+<div class="container my-2">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Image Type:</mat-label>
+    <mat-select [(ngModel)]="selectedImageType" (selectionChange)="loadIsobarData()">
+      <mat-option value="isobar">Isobar</mat-option>
+      <mat-option value="isotherm">Isotherm</mat-option>
+      <mat-option value="isoneph">Isoneph</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<!-- Button row with equal-sized buttons -->
+<div class="button-row d-flex flex-wrap justify-content-between">
+  <button mat-raised-button class="btn btn-primary m-1" (click)="toggleStationMarkers()">
+    {{ stationMarkersVisible ? 'Hide Stations' : 'Show Stations' }}
+  </button>
+  <button mat-raised-button class="btn btn-primary m-1" (click)="togglePngOverlay()">
+    {{ pngOverlayVisible ? 'Hide Image Overlay' : 'Show Image Overlay' }}
+  </button>
+  <button mat-raised-button class="m-1" (click)="toggleHeatmapOverlay()">
+    Toggle Heatmap Overlay
+  </button>
+</div>
+
+<div id="capture-area">
+<div class="container-isotherm">
+  <div id="map2"></div>
+</div>
+</div>

@@ -1,0 +1,77 @@
+/* General Container Styles */
+.container {
+  padding: 0 15px;
+  text-align: center; /* Center-align heading and text */
+  margin-bottom: 2rem; /* Add margin below the container */
+}
+
+/* Container for map */
+.container-isotherm {
+  display: flex; /* Use flexbox to center the map */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 80vh; /* Adjust height as needed */
+}
+
+/* Map Styles */
+#map2 {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd; /* Optional: border around the map */
+}
+
+/* Custom Station Icon Styles */
+.custom-station-icon {
+  background-color: white; /* Background color of the icon */
+  border-radius: 5px; /* Rounded corners */
+  border: 2px solid #007bff; /* Border color */
+  padding: 5px; /* Padding around the content */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+}
+
+/* Button Styles */
+button {
+  margin: 0 5px; /* Add some margin between buttons */
+  padding: 30px 15px;
+  background-color: #28a745; /* Green background color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 50px; /* Set a uniform height */
+  flex: 1; /* Allow buttons to grow equally */
+  min-width: 150px; /* Minimum width for uniformity */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition effects */
+}
+
+button:hover {
+  background-color: #218838; /* Darker green for hover effect */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Button Row Styles */
+.button-row {
+  display: flex;
+  flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+  justify-content: space-between; /* Distributes space between buttons */
+}
+
+/* Custom Marker Styles */
+.station-marker-content {
+  font-size: 1px; /* Set a fixed font size */
+  width: 9px; /* Fixed width for the marker */
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8); /* Optional background for better readability */
+  border-radius: 5px;
+  padding: 3px;
+  border: 1px solid #333;
+}
+
+.custom-station-icon {
+  transform: translate(-50%, -50%); /* Center the marker */
+}
+
+/* Material Form Field */
+.mat-form-field {
+  width: 100%; /* Ensure Material form field takes full width */
+}

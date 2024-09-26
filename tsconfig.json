@@ -26,6 +26,9 @@
     ],
     "types": [
       "mapbox-gl"
+    ],
+    "typeRoots": [
+      "./src/@types" // Add this line
     ]
   },
   "angularCompilerOptions": {
