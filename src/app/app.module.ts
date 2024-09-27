@@ -20,6 +20,8 @@ import { IsobarImageDataService } from './services/image/isobar-image-data.servi
 import { IsobarService } from './services/geojson/isobar.service';
 import { MapComponent } from './components/map/map.component';
 import { FormsModule } from '@angular/forms';
+import { LoginpageComponent } from './components/loginpage/loginpage.component';
+import { SignuppageComponent } from './components/signuppage/signuppage.component';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { FormsModule } from '@angular/forms';
     DrawerpageComponent,
     IsobarsComponent,
     MapComponent,
+    LoginpageComponent,
+    SignuppageComponent,
   ],
   imports: [
     BrowserModule,
