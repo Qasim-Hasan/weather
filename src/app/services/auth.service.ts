@@ -22,11 +22,8 @@ export class AuthService {
     return this.http.post<{ success: boolean, message: string }>(this.apiUrl, body, { headers })
       .pipe(
         map(response => {
-          if (response.success) {
-            this.loggedIn = true; // Set loggedIn to true on successful login
-            return true; // Login successful
-          }
-          return false; // Login failed
+          this.loggedIn = response.success; // Set loggedIn based on API response's 'success'
+          return this.loggedIn;
         }),
         catchError(this.handleError) // Catch and handle errors
       );

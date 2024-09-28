@@ -16,6 +16,8 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isLoggedIn()) {
       // If the user is logged in, allow access to any route
       if (state.url === '/login') {
+        // Redirect to homepage if already logged in and trying to access login page
+        this.router.navigate(['/homepage']);
         return false; // Prevent access to the login page
       }
       return true; // Allow access to other routes
