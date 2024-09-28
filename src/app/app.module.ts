@@ -22,6 +22,8 @@ import { MapComponent } from './components/map/map.component';
 import { FormsModule } from '@angular/forms';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { SignuppageComponent } from './components/signuppage/signuppage.component';
+import { AuthService } from './services/auth.service';
+import { HeaderComponent } from './components/loginpage/header/header.component';
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { SignuppageComponent } from './components/signuppage/signuppage.componen
     MapComponent,
     LoginpageComponent,
     SignuppageComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ import { SignuppageComponent } from './components/signuppage/signuppage.componen
     MatButtonModule,
     FormsModule
   ],
-  providers: [CsvDataService, IsobarImageDataService ,IsobarService],
+  providers: [CsvDataService, IsobarImageDataService ,IsobarService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

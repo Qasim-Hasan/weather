@@ -1,0 +1,254 @@
+.login-container {
+  max-width: 700px;
+  min-height: 500px; /* Use min-height instead of max-height */
+  margin: 100px auto;
+  padding: 20px;
+  border: 3px solid #ccc;
+  border-radius: 30px;
+  box-shadow: 0px 4px 6px rgba(13, 231, 31, 0.1);
+  background-color: rgba(205, 217, 221, var(--login-container-opacity)); /* Use the opacity variable */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.login-container:hover {
+  background-color: rgb(255, 255, 255); /* Increase opacity on hover */
+  box-shadow: 0px 8px 12px rgba(13, 231, 31, 0.2); /* Increase shadow on hover */
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+
+:root {
+  --login-container-opacity: 0.1; /* Set the default opacity value */
+}
+
+
+h1 {
+  font-size: 50px;;
+  text-align: center;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+.login-container form {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  gap: 20px; /* Equal spacing between elements */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  gap: 5px; /* Optional: space between label and input */
+}
+
+.form-control {
+  border: 1px solid #ccc; /* Default border color */
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 24px;
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff; /* Focus color */
+  box-shadow: 0 0 5px rgba(238, 235, 235, 0.938);
+}
+
+.form-control.ng-touched.ng-invalid {
+  border-color: red; /* Red border for invalid fields */
+}
+
+.form-control.ng-touched.ng-valid {
+  border-color: green; /* Green border for valid fields */
+}
+
+.text-danger {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff; /* Initial blue color */
+  color: white;
+  position: relative;
+  overflow: hidden; /* To contain the sliding effect within the button */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background color */
+  z-index: 1; /* Ensure button text is above background */
+}
+
+button[type="submit"]:hover {
+  background-color: #60c077; /* Green color on hover */
+  transform: translateY(-3px); /* Slight lift */
+}
+
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%; /* Start off the left side */
+  width: 100%;
+  height: 100%;
+  background: #28a745; /* The sliding green background */
+  transition: left 0.3s ease; /* Smooth transition for sliding effect */
+  z-index: 0; /* Ensure background is below text */
+}
+
+button[type="submit"]:hover::before {
+  left: 0; /* Move the green background into view */
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+}
+
+.button-text {
+  position: relative;
+  z-index: 2; /* Ensure this text is above the background */
+}
+
+.hover-text {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the text */
+  color: white;
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  z-index: 1; /* Behind the button text */
+}
+
+button[type="submit"]:hover .button-text {
+  opacity: 0; /* Hide the login text */
+}
+
+button[type="submit"]:hover .hover-text {
+  opacity: 1; /* Show the access granted text */
+}
+
+.alert {
+  margin-top: 20px;
+}
+
+main.content {
+  flex: 1; /* Take up remaining space */
+  overflow-y: auto; /* Enable scrolling if content exceeds viewport */
+  padding: 20px; /* Adjust as needed */
+  border: 2px solid black; /* Example border */
+  box-sizing: border-box; /* Include padding and border in width/height */
+  background-image: url('../../../assets/icons/cloudy-weather-icons.jpg'); /* Specify your image path */
+  background-size: cover; /* Cover the entire content area */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image from repeating */
+  color: rgba(0, 0, 0, 0.85); /* Text color for contrast (optional) */
+}
+
+
+.footer {
+  background-color: #1c2331;
+  color: white;
+  width: 100%;
+  height: 60px; /* Fixed height */
+  margin-top: auto; /* Push the footer to the bottom */
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure full viewport height */
+  margin: 0;
+}
+
+
+
+.form-group {
+  margin-bottom: 20px; /* Equal spacing between each form group */
+}
+
+
+
+.text-danger {
+  margin-top: 15px;
+  font-size: 20px; /* Increased font size for better visibility */
+  color: red; /* Ensure the text color is red */
+}
+
+
+
+h1 {
+  text-align: center;
+  padding: 30px;
+}
+
+/* Form Group and Control Styles */
+.form-group {
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  gap: 5px; /* Space between label and input */
+  font-weight: bold;
+}
+
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff; /* Focus color */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Button Styles */
+button[type="submit"] {
+  width: 100%;
+  padding: 15px; /* Adjusted padding for button */
+  font-size: 20px; /* Slightly reduced font size */
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #007bff, #60c077); /* Gradient background */
+  color: white;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(90deg, #60c077, #007bff); /* Reverse gradient on hover */
+  transform: translateY(-3px); /* Slight lift */
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc; /* Greyed out style for disabled button */
+  cursor: not-allowed; /* Change cursor on disabled */
+}
+
+
+
+/* Footer Style */
+.footer {
+  background-color: #1c2331;
+  color: white;
+  width: 100%;
+  height: 60px; /* Fixed height */
+  margin-top: auto; /* Push the footer to the bottom */
+}
+
+/* Overall Layout */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure full viewport height */
+  margin: 0;
+}
+.login-image {
+  width: 150px; /* Set to a normal icon size */
+  height: 150px; /* Set to a normal icon size */
+  margin: auto; /* Center the image and add space below */
+  display: block; /* Centering in the container */
+}
