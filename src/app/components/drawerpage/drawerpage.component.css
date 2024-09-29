@@ -102,3 +102,12 @@
   height: auto; /* Maintain aspect ratio */
   margin-right: 10px; /* Space between icon and title */
 }
+.drawer-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px; /* Adjust padding as necessary */
+}
+
+.drawer-link i {
+  margin-right: 10px; /* Space between icon and text */
+}

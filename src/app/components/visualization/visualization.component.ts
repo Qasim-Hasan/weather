@@ -1,98 +1,27 @@
-import { Component, AfterViewInit } from '@angular/core';
-import * as d3 from 'd3';
 
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DrawerpageComponent } from '../drawerpage/drawerpage.component';
+import {AfterViewInit } from '@angular/core';
 @Component({
   selector: 'app-visualization',
   templateUrl: './visualization.component.html',
   styleUrls: ['./visualization.component.css']
 })
 export class VisualizationComponent implements AfterViewInit {
+  @ViewChild(DrawerpageComponent) drawerPageComponent!: DrawerpageComponent;
 
-  private data = [
-    { language: 'JavaScript', value: 70 },
-    { language: 'Python', value: 80 },
-    { language: 'Java', value: 60 },
-    { language: 'C++', value: 50 },
-    { language: 'Go', value: 40 },
-  ];
-
-  private margin = { top: 60, right: 30, bottom: 50, left: 60 };
-  private width = 1000 - this.margin.left - this.margin.right;
-  private height = 600 - this.margin.top - this.margin.bottom;
-
-  constructor() { }
-
-  ngAfterViewInit(): void {
-      // Use setTimeout to ensure the SVG is rendered before D3 tries to access it
-  setTimeout(() => {
-    this.createSvg();
-    this.drawBars();
-  }, 0);
+  ngAfterViewInit() {
+    // Access drawerPageComponent here
+    if (!this.drawerPageComponent) {
+      console.error('DrawerPageComponent not found!');
+    }
   }
 
-  private createSvg(): void {
-    d3.select('svg')
-      .attr('width', this.width + this.margin.left + this.margin.right)
-      .attr('height', this.height + this.margin.top + this.margin.bottom);
-  }
-
-  private drawBars(): void {
-    const svg = d3.select('svg');
-
-    // Clear previous content
-    svg.selectAll('*').remove();
-
-    const xScale = d3.scaleBand()
-      .domain(this.data.map(d => d.language))
-      .range([0, this.width])
-      .padding(0.2);
-
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(this.data, d => d.value) || 100])
-      .range([this.height, 0]);
-
-    // Draw X axis
-    svg.append('g')
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`)
-      .call(d3.axisBottom(xScale))
-      .append('text')
-      .attr('fill', '#000')
-      .attr('x', this.width / 2)
-      .attr('y', 35)
-      .attr('text-anchor', 'middle')
-      .text('Programming Languages');
-
-    // Draw Y axis
-    svg.append('g')
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-      .call(d3.axisLeft(yScale))
-      .append('text')
-      .attr('fill', '#000')
-      .attr('transform', 'rotate(-90)')
-      .attr('y', -40)
-      .attr('x', -this.height / 2)
-      .attr('text-anchor', 'middle')
-      .text('Usage (%)');
-
-    // Draw bars with conditional checks to avoid undefined values
-    svg.selectAll('rect')
-      .data(this.data)
-      .enter()
-      .append('rect')
-      .attr('x', (d) => {
-        const xValue = xScale(d.language);
-        return xValue !== undefined ? this.margin.left + xValue : 0; // Default to 0 if undefined
-      })
-      .attr('y', (d) => this.margin.top + yScale(d.value))
-      .attr('width', xScale.bandwidth())
-      .attr('height', (d) => this.height - yScale(d.value))
-      .attr('fill', '#4CAF50');
-  }
-  private onResize(): void {
-    // Update dimensions based on window size
-    this.width = Math.max(500, window.innerWidth - this.margin.left - this.margin.right);
-    this.height = Math.max(300, window.innerHeight - this.margin.top - this.margin.bottom);
-    this.createSvg();
-    this.drawBars();
+  toggleDrawer() {
+    if (this.drawerPageComponent) {
+      this.drawerPageComponent.toggleDrawer(); // Toggle drawer open/close
+    } else {
+      console.error('DrawerPageComponent not found!');
+    }
   }
 }

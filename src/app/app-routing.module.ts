@@ -11,10 +11,11 @@ import { SettingsComponent } from './components/settings/settings.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginpageComponent },
-  { path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard] }, // Protect this route
-  { path: 'visualization', component: VisualizationComponent, canActivate: [AuthGuard] }, // Protect this route
-  { path: 'gis', component: GisComponent, canActivate: [AuthGuard] }, // Protect this route
-  { path: 'isobars', component: IsobarsComponent, canActivate: [AuthGuard] }, // Protect this route
+  { path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard] },
+  { path: 'visualization', component: VisualizationComponent, canActivate: [AuthGuard] },
+  { path: 'gis', component: GisComponent, canActivate: [AuthGuard] },
+  {path :'climate',component: ClimatepageComponent,canActivate: [AuthGuard] },
+  {path: 'setting',component: SettingsComponent,canActivate: [AuthGuard] }
 ];
 */
 const routes: Routes = [
