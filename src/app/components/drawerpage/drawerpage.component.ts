@@ -6,13 +6,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./drawerpage.component.css']
 })
 export class DrawerpageComponent {
-  isDrawerOpen = false;
+  isDrawerOpen: boolean = false; // Track whether the drawer is open or closed
 
-  openDrawer() {
-    this.isDrawerOpen = true;
+  hoverDrawer(isHovering: boolean): void {
+    if (isHovering) {
+      this.isDrawerOpen = true; // Open the drawer on hover
+    } else {
+      this.isDrawerOpen = false; // Close the drawer when not hovered
+    }
   }
 
-  closeDrawer() {
-    this.isDrawerOpen = false;
+  toggleDrawer(): void {
+    this.isDrawerOpen = !this.isDrawerOpen; // Toggle the drawer's open state
+  }
+
+  closeDrawer(): void {
+    this.isDrawerOpen = false; // Method to close the drawer
   }
 }

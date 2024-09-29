@@ -9,7 +9,6 @@ import { FooterpageComponent } from './components/footerpage/footerpage.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VisualizationComponent } from './components/visualization/visualization.component';
 import { DrawerpageComponent } from './components/drawerpage/drawerpage.component';
-import { IsobarsComponent } from './components/isobars/isobars.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 // Import HttpClientModule
@@ -24,7 +23,9 @@ import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { SignuppageComponent } from './components/signuppage/signuppage.component';
 import { AuthService } from './services/auth.service';
 import { HeaderComponent } from './components/loginpage/header/header.component';
-
+import { SettingsComponent } from './components/settings/settings.component';
+import { ClimatepageComponent } from './components/climatepage/climatepage.component';
+import { BarGraphComponent } from './components/bar-graph/bar-graph.component';
 
 @NgModule({
   declarations: [
@@ -35,11 +36,14 @@ import { HeaderComponent } from './components/loginpage/header/header.component'
     FooterpageComponent,
     VisualizationComponent,
     DrawerpageComponent,
-    IsobarsComponent,
     MapComponent,
     LoginpageComponent,
     SignuppageComponent,
     HeaderComponent,
+    SettingsComponent,
+    ClimatepageComponent,
+    BarGraphComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,7 @@ import { HeaderComponent } from './components/loginpage/header/header.component'
     HttpClientModule,
     MatSelectModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [CsvDataService, IsobarImageDataService ,IsobarService, AuthService],
   bootstrap: [AppComponent],

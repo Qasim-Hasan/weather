@@ -1,16 +1,18 @@
-<div class="drawer" [ngClass]="{'drawer-open': isDrawerOpen}">
+<div class="drawer" [ngClass]="{'drawer-open': isDrawerOpen}" (mouseenter)="hoverDrawer(true)" (mouseleave)="hoverDrawer(false)">
   <div class="drawer-content">
-      <div class="drawer-header">
-          <h4 class="drawer-title">P M D</h4>
-          <button type="button" class="btn btn-secondary" (click)="closeDrawer()">
-              Close
-          </button>
-      </div>
+    <div class="drawer-header">
+      <span class="close-icon" (click)="closeDrawer()">&larr;</span> <!-- Arrow to close -->
+      <h4 class="drawer-title d-flex align-items-center justify-content-center">
+          <img src="../../../assets/icons/pmd.ico" alt="PMD Icon" class="drawer-icon"> P M D
+      </h4>
+  </div>
+
+
       <div class="drawer-body">
-          <p>Home</p>
-          <p>Home</p>
-          <p>Home</p>
+          <a routerLink="/homepage" class="drawer-link">Visualization</a>
+          <a routerLink="/visualization" class="drawer-link">AI Tools</a>
+          <a routerLink="/Signup" class="drawer-link">Climate Data</a>
       </div>
-      <div class="drawer-footer">Drawer footer</div>
   </div>
 </div>
+

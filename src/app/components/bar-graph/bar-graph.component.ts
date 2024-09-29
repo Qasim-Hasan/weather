@@ -2,12 +2,11 @@ import { Component, AfterViewInit } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
-  selector: 'app-visualization',
-  templateUrl: './visualization.component.html',
-  styleUrls: ['./visualization.component.css']
+  selector: 'app-bar-graph',
+  templateUrl: './bar-graph.component.html',
+  styleUrls: ['./bar-graph.component.css']
 })
-export class VisualizationComponent implements AfterViewInit {
-
+export class BarGraphComponent implements AfterViewInit {
   private data = [
     { language: 'JavaScript', value: 70 },
     { language: 'Python', value: 80 },
@@ -23,11 +22,11 @@ export class VisualizationComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit(): void {
-      // Use setTimeout to ensure the SVG is rendered before D3 tries to access it
-  setTimeout(() => {
-    this.createSvg();
-    this.drawBars();
-  }, 0);
+    // Use setTimeout to ensure the SVG is rendered before D3 tries to access it
+    setTimeout(() => {
+      this.createSvg();
+      this.drawBars();
+    }, 0);
   }
 
   private createSvg(): void {
@@ -74,8 +73,8 @@ export class VisualizationComponent implements AfterViewInit {
       .attr('text-anchor', 'middle')
       .text('Usage (%)');
 
-    // Draw bars with conditional checks to avoid undefined values
-    svg.selectAll('rect')
+    // Draw bars
+    const bars = svg.selectAll('rect')
       .data(this.data)
       .enter()
       .append('rect')
@@ -87,12 +86,13 @@ export class VisualizationComponent implements AfterViewInit {
       .attr('width', xScale.bandwidth())
       .attr('height', (d) => this.height - yScale(d.value))
       .attr('fill', '#4CAF50');
-  }
-  private onResize(): void {
-    // Update dimensions based on window size
-    this.width = Math.max(500, window.innerWidth - this.margin.left - this.margin.right);
-    this.height = Math.max(300, window.innerHeight - this.margin.top - this.margin.bottom);
-    this.createSvg();
-    this.drawBars();
+
+    // Add hover effect using regular functions
+    bars.on('mouseover', function () {
+        d3.select(this).attr('fill', '#FF5733'); // Change color on hover
+      })
+      .on('mouseout', function () {
+        d3.select(this).attr('fill', '#4CAF50'); // Revert color when not hovering
+      });
   }
 }

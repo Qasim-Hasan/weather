@@ -1,15 +1,13 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DrawerpageComponent } from '../drawerpage/drawerpage.component';
 import {AfterViewInit } from '@angular/core';
 @Component({
-  selector: 'app-homepage',
-  templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  selector: 'app-climatepage',
+  templateUrl: './climatepage.component.html',
+  styleUrls: ['./climatepage.component.css']
 })
-export class HomepageComponent implements AfterViewInit {
+export class ClimatepageComponent {
   @ViewChild(DrawerpageComponent) drawerPageComponent!: DrawerpageComponent;
-
   ngAfterViewInit() {
     // Access drawerPageComponent here
     if (!this.drawerPageComponent) {

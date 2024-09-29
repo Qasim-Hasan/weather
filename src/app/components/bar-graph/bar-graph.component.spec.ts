@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IsobarsComponent } from './isobars.component';
+import { BarGraphComponent } from './bar-graph.component';
 
-describe('IsobarsComponent', () => {
-  let component: IsobarsComponent;
-  let fixture: ComponentFixture<IsobarsComponent>;
+describe('BarGraphComponent', () => {
+  let component: BarGraphComponent;
+  let fixture: ComponentFixture<BarGraphComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [IsobarsComponent]
+      declarations: [BarGraphComponent]
     });
-    fixture = TestBed.createComponent(IsobarsComponent);
+    fixture = TestBed.createComponent(BarGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

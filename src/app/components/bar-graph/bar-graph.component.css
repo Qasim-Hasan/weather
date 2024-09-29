@@ -50,3 +50,10 @@ rect {
 rect:hover {
   fill: orange; /* Change color on hover */
 }
+.chart-container {
+  display: flex;
+
+  height: 100vh;          /* Full viewport height */
+}
+
+

@@ -1,7 +1,7 @@
 /* Navbar brand styling */
 .navbar-brand {
-  margin-left: 20px; /* Space from the left edge */
-  font-weight: bold; /* Make the brand name bold */
+  margin-left: 30px; /* Space from the left edge */
+  /* Make the brand name bold */
 }
 
 /* Align elements to the right and add spacing */
@@ -19,6 +19,15 @@
 /* Margin adjustments for form controls */
 .form-control {
   margin-right: 5px; /* Space between form controls */
+}
+/* styles.css or component-specific stylesheet */
+.navbar-nav .nav-item {
+  margin-right: 20px; /* Adjust the spacing as needed */
+}
+
+/* Optional: Remove margin from the last item */
+.navbar-nav .nav-item:last-child {
+  margin-right: 0;
 }
 
 /* Space between icon and text in nav links */
