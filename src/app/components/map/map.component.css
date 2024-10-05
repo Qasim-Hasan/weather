@@ -45,7 +45,7 @@ button {
 }
 
 button:hover {
-  background-color: #218838; /* Darker green for hover effect */
+  background-color: #4dbbd6; /* Darker green for hover effect */
   transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
@@ -55,6 +55,7 @@ button:hover {
   flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
   justify-content: space-between; /* Distributes space between buttons */
 }
+
 
 /* Custom Marker Styles */
 .station-marker-content {
@@ -74,4 +75,15 @@ button:hover {
 /* Material Form Field */
 .mat-form-field {
   width: 100%; /* Ensure Material form field takes full width */
+}
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2; /* Make sure the Three.js canvas is on top */
+}
+.custom-station-icon {
+  width: 30px;  /* Fixed width */
+  height: 30px; /* Fixed height */
+  transition: none; /* Prevent any scaling transition */
 }

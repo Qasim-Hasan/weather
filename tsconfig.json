@@ -25,10 +25,13 @@
       "dom"
     ],
     "types": [
-      "mapbox-gl"
+      "d3",
+      "leaflet",    // Add this if you are using Leaflet.
+      "particles.js"  // If using Particles.js.
     ],
     "typeRoots": [
-      "./src/@types" // Add this line
+      "node_modules/@types",
+      "src/@types" // Add this line
     ]
   },
   "angularCompilerOptions": {

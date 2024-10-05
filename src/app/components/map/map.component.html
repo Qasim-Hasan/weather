@@ -1,5 +1,5 @@
 <!-- Container for heading and text -->
- <app-drawerpage></app-drawerpage>
+<app-drawerpage></app-drawerpage>
 <div class="container my-4">
   <h1>PDM VISUALIZATION TOOLS</h1>
 </div>
@@ -27,10 +27,15 @@
   <button mat-raised-button class="m-1" (click)="toggleHeatmapOverlay()">
     Toggle Heatmap Overlay
   </button>
+  <!-- New Button to Toggle GeoJSON Layer -->
+  <button mat-raised-button class="m-1" (click)="toggleGeoJsonLayer()">
+    {{ geoJsonLayerVisible ? 'Hide GeoJSON Layer' : 'Show GeoJSON Layer' }}
+  </button>
 </div>
 
 <div id="capture-area">
-<div class="container-isotherm">
-  <div id="map2"></div>
+  <div class="container-isotherm">
+    <div id="map2"></div>
+  </div>
 </div>
-</div>
+

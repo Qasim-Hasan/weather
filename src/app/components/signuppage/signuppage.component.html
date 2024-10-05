@@ -1,1 +1,95 @@
-<p>signuppage works!</p>
+
+
+<main class="content">
+  <a routerLink="/login" class="back-arrow" title="Go back to Login">
+    <i class="bi bi-arrow-left bold-icon"></i>
+  </a>
+  <div class="login-container">
+    <img src="../../../assets/icons/aervion.jpg" alt="Login Image" class="login-image">
+
+    <h1>Create Admin Account</h1>
+
+    <form (ngSubmit)="onSubmit()" #signupForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="username">Admin Username*</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          [(ngModel)]="admin.username"
+          name="username"
+          #usernameField="ngModel"
+          required
+          minlength="4"
+          placeholder="Enter your username">
+        <div *ngIf="usernameField.invalid && usernameField.touched" class="text-danger">
+          <small *ngIf="usernameField.errors?.['required']">Username is required.</small>
+          <small *ngIf="usernameField.errors?.['minlength']">Username must be at least 4 characters long.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password*</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          [(ngModel)]="admin.password"
+          name="password"
+          #passwordField="ngModel"
+          required
+          minlength="2"
+          placeholder="Enter your password">
+        <div *ngIf="passwordField.invalid && passwordField.touched" class="text-danger">
+          <small *ngIf="passwordField.errors?.['required']">Password is required.</small>
+          <small *ngIf="passwordField.errors?.['minlength']">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password*</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          class="form-control"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          #confirmPasswordField="ngModel"
+          required
+          placeholder="Confirm your password">
+        <div *ngIf="confirmPasswordField.invalid && confirmPasswordField.touched" class="text-danger">
+          <small *ngIf="confirmPasswordField.errors?.['required']">Confirm Password is required.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email*</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="admin.email"
+          name="email"
+          #emailField="ngModel"
+          required
+          placeholder="Enter your email">
+        <div *ngIf="emailField.invalid && emailField.touched" class="text-danger">
+          <small *ngIf="emailField.errors?.['required']">Email is required.</small>
+          <small *ngIf="emailField.errors?.['email']">Please enter a valid email.</small>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="signupForm.invalid"
+        style="margin-top: 25px;">
+        <span class="button-text">Sign Up</span>
+        <span class="hover-text">Create Account</span>
+      </button>
+    </form>
+
+  </div>
+</main>
+
+<app-footerpage></app-footerpage>

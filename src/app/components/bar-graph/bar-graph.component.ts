@@ -1,13 +1,18 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as d3 from 'd3';
 
+interface LanguageData {
+  language: string;
+  value: number;
+}
+
 @Component({
   selector: 'app-bar-graph',
   templateUrl: './bar-graph.component.html',
   styleUrls: ['./bar-graph.component.css']
 })
 export class BarGraphComponent implements AfterViewInit {
-  private data = [
+  private data: LanguageData[] = [
     { language: 'JavaScript', value: 70 },
     { language: 'Python', value: 80 },
     { language: 'Java', value: 60 },
@@ -41,7 +46,7 @@ export class BarGraphComponent implements AfterViewInit {
     // Clear previous content
     svg.selectAll('*').remove();
 
-    const xScale = d3.scaleBand()
+    const xScale = d3.scaleBand<string>()
       .domain(this.data.map(d => d.language))
       .range([0, this.width])
       .padding(0.2);
@@ -78,13 +83,10 @@ export class BarGraphComponent implements AfterViewInit {
       .data(this.data)
       .enter()
       .append('rect')
-      .attr('x', (d) => {
-        const xValue = xScale(d.language);
-        return xValue !== undefined ? this.margin.left + xValue : 0; // Default to 0 if undefined
-      })
-      .attr('y', (d) => this.margin.top + yScale(d.value))
+      .attr('x', d => this.margin.left + xScale(d.language)!)
+      .attr('y', d => this.margin.top + yScale(d.value))
       .attr('width', xScale.bandwidth())
-      .attr('height', (d) => this.height - yScale(d.value))
+      .attr('height', d => this.height - yScale(d.value))
       .attr('fill', '#4CAF50');
 
     // Add hover effect using regular functions

@@ -16,16 +16,16 @@ import { HttpClientModule } from '@angular/common/http';
 // Services
 import { CsvDataService } from './services/csv/csv-data.service';
 import { IsobarImageDataService } from './services/image/isobar-image-data.service';
-import { IsobarService } from './services/geojson/isobar.service';
 import { MapComponent } from './components/map/map.component';
 import { FormsModule } from '@angular/forms';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { SignuppageComponent } from './components/signuppage/signuppage.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/login/auth.service';
 import { HeaderComponent } from './components/loginpage/header/header.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ClimatepageComponent } from './components/climatepage/climatepage.component';
 import { BarGraphComponent } from './components/bar-graph/bar-graph.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -53,8 +53,9 @@ import { BarGraphComponent } from './components/bar-graph/bar-graph.component';
     MatSelectModule,
     MatButtonModule,
     FormsModule,
+    MatSnackBarModule
   ],
-  providers: [CsvDataService, IsobarImageDataService ,IsobarService, AuthService],
+  providers: [CsvDataService, IsobarImageDataService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
