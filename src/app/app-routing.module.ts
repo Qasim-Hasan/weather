@@ -19,6 +19,7 @@ const routes: Routes = [
   {path :'climate',component: ClimatepageComponent,canActivate: [AuthGuard] },
   {path: 'setting',component: SettingsComponent,canActivate: [AuthGuard] }
 ];
+
 /*
 const routes: Routes = [
   { path: '', redirectTo: '/homepage', pathMatch: 'full' }, // Redirect to homepage instead of login

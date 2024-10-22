@@ -23,4 +23,24 @@ export class SettingsComponent {
       console.error('DrawerPageComponent not found!');
     }
   }
+  public temperatureUnit: string = 'Celsius'; // Default value
+  public selectedCity: string = 'Karachi'; // Default city
+  public weatherAlerts: boolean = true; // Default to enabled
+
+  public cities: string[] = ['Karachi', 'Lahore', 'Islamabad', 'Quetta', 'Peshawar'];
+
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  saveSettings() {
+    // Save settings logic here (e.g., to a service or local storage)
+    console.log('Settings Saved:', {
+      temperatureUnit: this.temperatureUnit,
+      selectedCity: this.selectedCity,
+      weatherAlerts: this.weatherAlerts
+    });
+  }
+
+
 }

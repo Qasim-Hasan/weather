@@ -21,8 +21,8 @@ export class BarGraphComponent implements AfterViewInit {
   ];
 
   private margin = { top: 60, right: 30, bottom: 50, left: 60 };
-  private width = 1000 - this.margin.left - this.margin.right;
-  private height = 600 - this.margin.top - this.margin.bottom;
+  private width = 400 - this.margin.left - this.margin.right;
+  private height = 400 - this.margin.top - this.margin.bottom;
 
   constructor() { }
 

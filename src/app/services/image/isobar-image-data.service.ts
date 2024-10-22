@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -20,7 +20,14 @@ export class IsobarImageDataService {
     // Set query parameters
     const params = new HttpParams().set('image_type', imageType);
 
-    return this.http.get<any>(this.apiUrlImage, { params }).pipe(catchError(this.handleError));
+    // Set HTTP headers to prevent caching
+    const headers = new HttpHeaders({
+      'Cache-Control': 'no-cache, no-store, must-revalidate', // HTTP 1.1
+      'Pragma': 'no-cache', // HTTP 1.0
+      'Expires': '0' // Proxies
+    });
+
+    return this.http.get<any>(this.apiUrlImage, { params, headers }).pipe(catchError(this.handleError));
   }
 
   // Method to handle HTTP errors

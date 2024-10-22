@@ -4,8 +4,12 @@
   <h1>PDM VISUALIZATION TOOLS</h1>
 </div>
 
-<!-- Dropdown for selecting image type -->
 <div class="container my-2">
+    <!-- Progress bar displayed between dropdowns -->
+    <div class="progress-bar-container" *ngIf="loading">
+      <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+    </div>
+  <!-- Dropdown for selecting image type -->
   <mat-form-field appearance="fill">
     <mat-label>Select Image Type:</mat-label>
     <mat-select [(ngModel)]="selectedImageType" (selectionChange)="loadIsobarData()">
@@ -14,7 +18,22 @@
       <mat-option value="isoneph">Isoneph</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <!-- Dropdown for selecting data type -->
+  <mat-form-field appearance="fill" class="mt-2">
+    <mat-label>Select Data Type:</mat-label>
+    <mat-select [(ngModel)]="selectedDataType" (selectionChange)="weatherdataformat()">
+      <mat-option value="synop">Synoptic</mat-option>
+      <mat-option value="metar">Metar</mat-option>
+      <mat-option value="wis2">Wis 2</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
 </div>
+
+
+
 
 <!-- Button row with equal-sized buttons -->
 <div class="button-row d-flex flex-wrap justify-content-between">
@@ -22,14 +41,13 @@
     {{ stationMarkersVisible ? 'Hide Stations' : 'Show Stations' }}
   </button>
   <button mat-raised-button class="btn btn-primary m-1" (click)="togglePngOverlay()">
-    {{ pngOverlayVisible ? 'Hide Image Overlay' : 'Show Image Overlay' }}
+    {{ pngOverlayVisible ? 'Hide Lines' : 'Show Lines' }}
   </button>
-  <button mat-raised-button class="m-1" (click)="toggleHeatmapOverlay()">
-    Toggle Heatmap Overlay
+  <button mat-raised-button class="btn btn-primary m-1" (click)="toggleHeatmapOverlay()">
+    {{ heatmapOverlay ? 'Hide HeatMap' : 'Show HeatMap' }}
   </button>
-  <!-- New Button to Toggle GeoJSON Layer -->
   <button mat-raised-button class="m-1" (click)="toggleGeoJsonLayer()">
-    {{ geoJsonLayerVisible ? 'Hide GeoJSON Layer' : 'Show GeoJSON Layer' }}
+    {{ geoJsonLayerVisible ? 'Hide Map' : 'Show Map' }}
   </button>
 </div>
 

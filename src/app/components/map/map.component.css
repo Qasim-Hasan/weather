@@ -55,6 +55,9 @@ button:hover {
   flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
   justify-content: space-between; /* Distributes space between buttons */
 }
+.mt-2 {
+  margin: 16px; /* Adjust as needed for spacing */
+}
 
 
 /* Custom Marker Styles */
@@ -87,3 +90,15 @@ canvas {
   height: 30px; /* Fixed height */
   transition: none; /* Prevent any scaling transition */
 }
+
+/* Style the progress bar container */
+.progress-bar-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Customize the color if needed */
+::ng-deep .mat-progress-bar-fill {
+  background-color: #4caf50; /* Green color */
+}
+

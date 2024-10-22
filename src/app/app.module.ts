@@ -26,6 +26,16 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ClimatepageComponent } from './components/climatepage/climatepage.component';
 import { BarGraphComponent } from './components/bar-graph/bar-graph.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Import this module
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
+
+import { MatOptionModule } from '@angular/material/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+
 
 @NgModule({
   declarations: [
@@ -53,7 +63,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSelectModule,
     MatButtonModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatGridListModule,
+    MatCardModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatSlideToggleModule,
+    MatButtonModule,
   ],
   providers: [CsvDataService, IsobarImageDataService, AuthService],
   bootstrap: [AppComponent],

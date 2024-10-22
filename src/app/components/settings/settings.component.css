@@ -3,8 +3,9 @@
   background-color: transparent;
   border: none;
   padding: 0;
-  margin: 0;
 }
+
+/* Hamburger icon styles */
 .hamburger-icon {
   display: flex;
   flex-direction: column;
@@ -19,18 +20,13 @@
   background-color: black; /* Color of the lines */
 }
 
-
 /* Optional: Add some spacing to the button */
 .drawer-button {
   margin-right: 20px;
   margin-bottom: 20px;
-  background-color: transparent;
-  border: none;
-  padding: 0;
 }
 
-
-
+/* Host styles */
 :host {
   display: flex;
   flex-direction: column;
@@ -38,13 +34,14 @@
   margin: 0;
 }
 
+/* Main content styles */
 main.content {
   flex: 1; /* Take up remaining space */
   overflow-y: auto; /* Enable scrolling if content exceeds viewport */
   padding: 20px; /* Adjust as needed */
-
 }
 
+/* Footer styles */
 .footer {
   background-color: #1c2331;
   color: white;
@@ -53,3 +50,91 @@ main.content {
   margin-top: auto; /* Push the footer to the bottom */
 }
 
+/* Global page content styling */
+.content {
+  padding-bottom: 160px; /* Adjusted for footer height */
+}
+
+/* Card Spacing and styles */
+.mat-card {
+  padding: 26px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 250px; /* Increased height of cards */
+  margin-bottom: 20px; /* Space between cards */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
+}
+
+.mat-card:hover {
+  transform: translateY(-5px); /* Hover effect */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Adjust the dropdown for the location */
+.mat-form-field {
+  width: 80%; /* Reduced width for better appearance */
+  max-width: 300px; /* Optional: Set a max width */
+}
+
+/* Save Settings Button styles */
+button.mat-raised-button {
+  font-size: 16px; /* Increased font size */
+  padding: 12px 24px; /* Padding for button */
+  background-color: #6cb2eb; /* Light blue color */
+  color: white; /* Text color */
+  transition: background-color 0.3s ease; /* Transition for hover */
+}
+
+button.mat-raised-button:hover {
+  background-color: #5ca8e0; /* Darker blue on hover */
+}
+
+/* Card numbering styles */
+.mat-card-title {
+  font-weight: bold; /* Bold titles */
+}
+
+.mat-card-title::before {
+  content: attr(data-number) ". "; /* Number before each card title */
+  font-weight: normal; /* Normal weight for the number */
+  color: #007bff; /* Color for the number */
+}
+/* Card Hover Effect */
+.card-hover {
+  padding: 20px; /* Adjust padding for a cleaner look */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 250px; /* Height of cards */
+  margin-bottom: 20px; /* Space between cards */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation on hover */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Align items vertically */
+  justify-content: center; /* Center content vertically */
+  text-align: center; /* Center text inside cards */
+}
+
+/* Hover effect for cards */
+.card-hover:hover {
+  transform: translateY(-5px); /* Hover effect */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Centering form on the page */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+}
+
+/* Save Settings Button styles */
+.save-settings-button {
+  font-size: 18px; /* Increased font size for visibility */
+  padding: 12px 24px; /* Padding for button */
+  background-color: #6cb2eb; /* Light blue color */
+  color: white; /* Text color */
+  transition: background-color 0.3s ease; /* Transition for hover */
+  margin-top: 20px; /* Space above the button */
+  width: 100%; /* Full width */
+}
+
+.save-settings-button:hover {
+  background-color: #5ca8e0; /* Darker blue on hover */
+}

@@ -9,6 +9,18 @@
   background-color: rgba(205, 217, 221, var(--login-container-opacity)); /* Use the opacity variable */
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
+/* Background video */
+.background-video {
+  position: fixed; /* Fix the video in the background */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  object-fit: cover; /* Cover the area without distorting the aspect ratio */
+  z-index: -1; /* Send the video behind other content */
+}
+
+
 
 .login-container:hover {
   background-color: rgb(255, 255, 255); /* Increase opacity on hover */
@@ -16,6 +28,27 @@
   transform: translateY(-5px); /* Lift effect on hover */
 }
 
+/* Background video */
+.background-video {
+  position: fixed; /* Fix the video in the background */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  object-fit: cover; /* Cover the area without distorting the aspect ratio */
+  z-index: -1; /* Send the video behind other content */
+}
+
+/* Style for the content area */
+.content {
+  position: relative; /* Required for absolute positioning of the video */
+  z-index: 1; /* Bring the content above the video */
+  color: white; /* Optional: Change text color for readability */
+}
+
+
+
+/* Additional styles for other elements (like header, footer) can go here */
 
 :root {
   --login-container-opacity: 0.1; /* Set the default opacity value */
