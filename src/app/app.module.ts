@@ -34,6 +34,8 @@ import { MatRadioModule } from '@angular/material/radio';
 
 import { MatOptionModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { SecretPinComponent } from './components/loginpage/secretpin/secretpin.component';
+
 
 
 
@@ -53,6 +55,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     SettingsComponent,
     ClimatepageComponent,
     BarGraphComponent,
+    SecretPinComponent,
+
 
   ],
   imports: [

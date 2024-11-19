@@ -113,6 +113,11 @@ export class MapComponent implements OnInit {
     );
   }
   public loadIsobarData() {
+    if (!this.selectedImageType) {
+      console.error('Image type is not selected.');
+      return;
+    }
+
     const imageType = this.selectedImageType;
     this.showLoading();
     setTimeout(() => {

@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component , SecurityContext} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/login/auth.service';
+import { PinGuard } from '../../guards/pin.guard';  // Import PinGuard
+import { environment} from './../../../environments/environment';
+import { DomSanitizer } from '@angular/platform-browser';  // Import necessary classes for DOM sanitization
 
 @Component({
   selector: 'app-loginpage',
@@ -11,20 +14,38 @@ export class LoginpageComponent {
   username: string = '';
   password: string = '';
   loginError: string | null = null;
-
-  constructor(private router: Router, private authService: AuthService) {
-        // Check if already logged in and redirect to homepage
-        if (this.authService.isLoggedIn()) {
-          this.router.navigate(['/homepage']);
-        }
+  showPinModal: boolean = false;  // Flag to control modal visibility
+  isLoading: boolean = false;
+  constructor(
+    private pinGuard: PinGuard,
+    private router: Router,
+    private authService: AuthService,
+    private sanitizer: DomSanitizer  // Inject the DomSanitizer
+  ) {
+    // Check if already logged in and redirect to homepage
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/homepage']);
+    }
   }
 
   login() {
-    this.authService.login(this.username, this.password).subscribe(
+    this.isLoading = true;
+
+    // Simulate a 10-second delay for the loading state
+    setTimeout(() => {
+      // Your login logic goes here
+      this.isLoading = false;
+      // Optionally, handle login success or error here
+    }, 10000); //
+    // Sanitize username and password to prevent XSS and other injection attacks
+    const sanitizedUsername = this.sanitizer.sanitize(SecurityContext.HTML, this.username);
+    const sanitizedPassword = this.sanitizer.sanitize(SecurityContext.HTML, this.password);
+
+    // Use sanitized data for login
+    this.authService.login(sanitizedUsername!, sanitizedPassword!).subscribe(
       success => {
         if (success) {
           console.log('Login successful'); // Log success
-
           this.router.navigate(['/homepage']); // Redirect to home or another page
         } else {
           console.log('Login failed, invalid credentials'); // Log invalid credentials case
@@ -36,5 +57,41 @@ export class LoginpageComponent {
         this.loginError = error; // Display the error message returned from the service
       }
     );
+  }
+// Custom username validation to avoid special characters and quotes
+validateUsername() {
+  const usernamePattern = /^[A-Za-z0-9_ ]*$/; // Allow only letters, numbers, and underscores
+  if (!usernamePattern.test(this.username)) {
+    this.username = this.username.replace(/[^A-Za-z0-9_ ]/g, ''); // Remove invalid characters
+  }
+}
+
+// Custom password validation: must contain at least 3 numbers and no special characters or quotes
+validatePassword() {
+  const passwordPattern = /^[A-Za-z0-9]*$/; // Allow only letters and numbers
+  const numberCount = (this.password.match(/\d/g) || []).length; // Count digits
+  if (!passwordPattern.test(this.password)) {
+    this.password = this.password.replace(/[^A-Za-z0-9]/g, ''); // Remove invalid characters
+  }
+  if (numberCount < 3) {
+    // Add logic to show error when password doesn't have 3 numbers
+  }
+}
+  // When the user clicks "Sign Up", show the PIN modal
+  onSignUpClick() {
+    this.showPinModal = true;  // Show the PIN modal
+  }
+
+  // Handle PIN verification result
+  onPinVerified(isVerified: boolean) {
+    if (isVerified) {
+      // If PIN is correct, set the PIN in PinGuard and navigate to the signup page
+      this.pinGuard.setPin(environment.secretPin);  // Store the correct PIN
+      this.showPinModal = false;  // Close the PIN modal
+      this.router.navigate(['/signup']);  // Navigate to signup page
+    } else {
+      // If PIN is incorrect, keep the modal open and show an error message
+      this.showPinModal = true;  // Show the modal again for re-entry
+    }
   }
 }

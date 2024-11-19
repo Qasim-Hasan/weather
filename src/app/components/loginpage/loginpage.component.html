@@ -1,12 +1,14 @@
-
-
 <main class="content">
   <video autoplay loop muted class="background-video">
-    <source src="../../../assets/icons/clouds.mp4" type="video/mp4">
+    <source src="../../../assets/icons/clouds.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
   <div class="login-container">
-    <img src="../../../assets/icons/aervion.jpg" alt="Login Image" class="login-image">
+    <img
+      src="../../../assets/icons/aervion.jpg"
+      alt="Login Image"
+      class="login-image"
+    />
 
     <h1>Admin Login</h1>
 
@@ -21,11 +23,17 @@
           name="username"
           #usernameField="ngModel"
           required
-          minlength="4"
-          placeholder="Enter your username">
-        <div *ngIf="usernameField.invalid && usernameField.touched" class="text-danger">
+          minlength="6"
+          placeholder="Enter your username"
+          (input)="validateUsername()"
+        />
+        <div
+          *ngIf="usernameField.invalid && usernameField.touched"
+          class="text-danger"
+        >
           <small *ngIf="usernameField.errors?.['required']">Username is required.</small>
-          <small *ngIf="usernameField.errors?.['minlength']">Username must be at least 4 characters long.</small>
+          <small *ngIf="usernameField.errors?.['minlength']"></small>
+          <small *ngIf="usernameField.errors?.['pattern']"></small>
         </div>
       </div>
 
@@ -39,19 +47,26 @@
           name="password"
           #passwordField="ngModel"
           required
-          minlength="2"
-          placeholder="Enter your password">
-        <div *ngIf="passwordField.invalid && passwordField.touched" class="text-danger">
+          minlength="6"
+          placeholder="Enter your password"
+          (input)="validatePassword()"
+        />
+        <div
+          *ngIf="passwordField.invalid && passwordField.touched"
+          class="text-danger"
+        >
           <small *ngIf="passwordField.errors?.['required']">Password is required.</small>
-          <small *ngIf="passwordField.errors?.['minlength']">Password must be at least 6 characters long.</small>
+          <small *ngIf="passwordField.errors?.['minlength']"></small>
+          <small *ngIf="passwordField.errors?.['pattern']"></small>
         </div>
       </div>
-
+      <div class="loading-spinner" *ngIf="isLoading"></div>
       <button
         type="submit"
         class="btn btn-primary"
         [disabled]="loginForm.invalid"
-        style="margin-top: 25px;">
+        style="margin-top: 25px"
+      >
         <span class="button-text">Login</span>
         <span class="hover-text">Enter</span>
       </button>
@@ -60,16 +75,26 @@
         {{ loginError }}
       </div>
 
-      <!-- Link to signup page -->
+      <!-- Link to Sign Up page, triggers PIN modal on click -->
       <div class="text-center mt-3">
         <small>
           Don't have an account?
-          <a routerLink="/signup" class="signup-link">Sign Up</a>
+          <a
+            href="javascript:void(0)"
+            (click)="onSignUpClick()"
+            class="signup-link"
+            >Sign Up</a
+          >
         </small>
       </div>
+
+      <!-- Conditionally show the PIN modal -->
+      <app-secretpin
+        *ngIf="showPinModal"
+        (pinVerified)="onPinVerified($event)"
+      ></app-secretpin>
     </form>
   </div>
   <app-header></app-header>
 </main>
 <app-footerpage></app-footerpage>
-

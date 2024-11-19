@@ -1,5 +1,3 @@
-
-
 <main class="content">
   <a routerLink="/login" class="back-arrow" title="Go back to Login">
     <i class="bi bi-arrow-left bold-icon"></i>
@@ -20,11 +18,14 @@
           name="username"
           #usernameField="ngModel"
           required
-          minlength="4"
-          placeholder="Enter your username">
+          minlength="6"
+          placeholder="Enter your username"
+          pattern="^[a-zA-Z0-9 ]+$"  >
+
         <div *ngIf="usernameField.invalid && usernameField.touched" class="text-danger">
           <small *ngIf="usernameField.errors?.['required']">Username is required.</small>
-          <small *ngIf="usernameField.errors?.['minlength']">Username must be at least 4 characters long.</small>
+          <small *ngIf="usernameField.errors?.['minlength']">Username must be at least 6 characters long.</small>
+          <small *ngIf="usernameField.errors?.['pattern']">Only alphanumeric characters are allowed.</small>
         </div>
       </div>
 
@@ -38,11 +39,14 @@
           name="password"
           #passwordField="ngModel"
           required
-          minlength="2"
-          placeholder="Enter your password">
+          minlength="6"
+          placeholder="Enter your password"
+          pattern="^(?=(.*\d){3})(?!.*[^a-zA-Z0-9]).{6,}$"  >
+
         <div *ngIf="passwordField.invalid && passwordField.touched" class="text-danger">
           <small *ngIf="passwordField.errors?.['required']">Password is required.</small>
           <small *ngIf="passwordField.errors?.['minlength']">Password must be at least 6 characters long.</small>
+          <small *ngIf="passwordField.errors?.['pattern']">Password must contain at least 3 numbers and no special characters.</small>
         </div>
       </div>
 
@@ -56,9 +60,11 @@
           name="confirmPassword"
           #confirmPasswordField="ngModel"
           required
+          [ngClass]="{'is-invalid': confirmPasswordField.touched && confirmPasswordField.invalid && confirmPassword !== admin.password}"
           placeholder="Confirm your password">
         <div *ngIf="confirmPasswordField.invalid && confirmPasswordField.touched" class="text-danger">
           <small *ngIf="confirmPasswordField.errors?.['required']">Confirm Password is required.</small>
+          <small *ngIf="confirmPassword !== admin.password">Passwords do not match.</small>
         </div>
       </div>
 
@@ -72,13 +78,14 @@
           name="email"
           #emailField="ngModel"
           required
-          placeholder="Enter your email">
+          placeholder="Enter user@mail.com"
+          pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|yahoo\.com|outlook\.com)$"  >
         <div *ngIf="emailField.invalid && emailField.touched" class="text-danger">
           <small *ngIf="emailField.errors?.['required']">Email is required.</small>
           <small *ngIf="emailField.errors?.['email']">Please enter a valid email.</small>
+          <small *ngIf="emailField.errors?.['pattern']">Please enter a valid Gmail.com, Hotmail.com, outlook.com or Yahoo.com email.</small>
         </div>
-      </div>
-
+      </div><div class="loading-spinner" *ngIf="isLoading"></div>
       <button
         type="submit"
         class="btn btn-primary"
@@ -86,9 +93,9 @@
         style="margin-top: 25px;">
         <span class="button-text">Sign Up</span>
         <span class="hover-text">Create Account</span>
+
       </button>
     </form>
-
   </div>
 </main>
 

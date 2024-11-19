@@ -14,7 +14,7 @@ export class SignuppageComponent {
     password: '',
     email: ''
   };
-
+  isLoading: boolean = false;  // To track the loading state
   confirmPassword: string = ''; // Add confirm password property
 
   constructor(
@@ -30,8 +30,11 @@ export class SignuppageComponent {
         horizontalPosition: 'center',
         verticalPosition: 'top'
       });
-      return; // Prevent form submission
+      return;
     }
+
+    // Set loading state to true before starting the signup process
+    this.isLoading = true;
 
     this.signupService.createAdmin(this.admin).subscribe(
       response => {
@@ -42,16 +45,28 @@ export class SignuppageComponent {
           verticalPosition: 'top'
         });
         this.router.navigate(['/login']);
+        this.isLoading = false; // Hide spinner after successful signup
       },
       error => {
-        console.error('Error creating admin', error);
-        this.snackBar.open('Error creating admin. Please try again.', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top'
-        });
+        this.isLoading = false; // Hide spinner after an error occurs
+        if (error.status === 400 && error.error.detail === "Username already exists") {
+          this.snackBar.open('Username already exists. Choose a different one.', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
+        } else {
+          console.error('Error creating admin', error);
+          this.snackBar.open('Error creating admin. Please try again.', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
+        }
       }
     );
   }
+
+
 }
 

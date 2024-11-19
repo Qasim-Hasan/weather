@@ -5,19 +5,21 @@ import { VisualizationComponent } from './components/visualization/visualization
 import { GisComponent } from './components/gis/gis.component';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { AuthGuard } from './guards/auth.guard'; // Import the AuthGuard
+import { PinGuard } from './guards/pin.guard';
 import { ClimatepageComponent } from './components/climatepage/climatepage.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { SignuppageComponent } from './components/signuppage/signuppage.component';
-
+import { SecretPinComponent } from './components/loginpage/secretpin/secretpin.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginpageComponent },
-  { path: 'signup',component: SignuppageComponent},
+  { path: 'signup',component: SignuppageComponent,canActivate: [PinGuard]},
   { path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard] },
   { path: 'visualization', component: VisualizationComponent, canActivate: [AuthGuard] },
   { path: 'gis', component: GisComponent, canActivate: [AuthGuard] },
   {path :'climate',component: ClimatepageComponent,canActivate: [AuthGuard] },
-  {path: 'setting',component: SettingsComponent,canActivate: [AuthGuard] }
+  {path: 'setting',component: SettingsComponent,canActivate: [AuthGuard] },
+  { path: 'secretpin', component: SecretPinComponent },
 ];
 
 /*
