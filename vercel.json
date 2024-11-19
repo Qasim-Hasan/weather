@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://www.aervion.com/login",
+      "permanent": true
+    }
+  ]
+}
