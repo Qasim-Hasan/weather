@@ -5,5 +5,11 @@
       "destination": "https://www.aervion.com/login",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
