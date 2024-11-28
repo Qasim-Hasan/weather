@@ -59,11 +59,10 @@ export class MapComponent implements OnInit {
       zoom: 6,
       minZoom: 4,
       maxZoom: 14,
+      attributionControl: false,
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 15,
       minZoom: 1,
       tileSize: 256,
@@ -72,7 +71,36 @@ export class MapComponent implements OnInit {
       noWrap: true,
     }).addTo(this.map);
     this.addGeoJsonLayer();
+    this.addCustomAttribution();
   }
+
+  private addCustomAttribution() {
+    // Create a custom control class extending from L.Control
+    const CustomControl = L.Control.extend({
+      options: {
+        position: 'bottomright' // You can change this to 'topright', 'topleft', or 'bottomleft'
+      },
+
+      onAdd: () => {
+        const div = L.DomUtil.create('div', 'custom-attribution');
+
+        // Your custom text and logo
+        div.innerHTML = `
+          <div style="display: flex; align-items: center;">
+            <img src="../../../assets/icons/aervion.jpg" alt="Logo" style="height: 20px; margin-right: 5px;">
+            <span>Made by Aervion</span>
+          </div>
+        `;
+
+        return div;
+      }
+    });
+
+    // Add the custom control to the map
+    const customAttribution = new CustomControl();
+    customAttribution.addTo(this.map!);
+  }
+
   showLoading() {
     this.loading = true;
   }
